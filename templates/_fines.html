@@ -1,0 +1,61 @@
+<div class="table-shell">
+<div class="table-responsive">
+<table class="table align-middle">
+<thead>
+  <tr>
+    <th>Book</th>
+    <th>Issue Code</th>
+    {% if not student_view|default(false) %}
+      <th>Borrower</th>
+    {% endif %}
+    <th>Fine Date</th>
+    <th>Amount</th>
+    <th>Payment Status</th>
+    {% if not student_view|default(false) %}
+      <th>Action</th>
+    {% endif %}
+  </tr>
+</thead>
+<tbody>
+  {% for f in rows %}
+  <tr>
+    <td><strong>{{ f.title }}</strong></td>
+    <td><code>{{ f.issue_code or '-' }}</code></td>
+    {% if not student_view|default(false) %}
+      <td>{{ f.user_name if f.user_name is defined else ('User #' ~ f.user_id) }}</td>
+    {% endif %}
+    <td>{{ f.fine_date or f.created_at[:10] }}</td>
+    <td><strong style="color:var(--text)">₹{{ "%.2f"|format(f.amount) }}</strong></td>
+    <td>
+      {% if f.status == 'paid' %}
+        <span class="badge bg-success">Paid</span>
+      {% elif f.status == 'unpaid' %}
+        <span class="badge bg-danger">Unpaid</span>
+      {% elif f.status == 'waived' %}
+        <span class="badge bg-secondary">Waived</span>
+      {% else %}
+        <span class="badge bg-warning">{{ f.status|capitalize }}</span>
+      {% endif %}
+    </td>
+    {% if not student_view|default(false) %}
+    <td>
+      {% if f.status == 'unpaid' %}
+        <form method="post" class="d-flex gap-2">
+          <input type="hidden" name="_csrf" value="{{ csrf }}">
+          <input type="hidden" name="fine_id" value="{{ f.id }}">
+          <button name="action" value="paid" class="btn btn-sm btn-success" type="submit">Mark Paid</button>
+          <button name="action" value="waived" class="btn btn-sm btn-outline-light" type="submit">Waive</button>
+        </form>
+      {% else %}
+        <small class="text-secondary">Settled</small>
+      {% endif %}
+    </td>
+    {% endif %}
+  </tr>
+  {% else %}
+  <tr><td colspan="7" class="text-secondary text-center py-4">No fine records found.</td></tr>
+  {% endfor %}
+</tbody>
+</table>
+</div>
+</div>

@@ -1,0 +1,50 @@
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Python cache & compiled bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.cert
+
+# Database files
+instance/*.sqlite
+instance/*.db
+instance/*.sqlite3
+*.sqlite
+*.sqlite3
+
+# Archives & Temporary Bundles
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.bak
+*.swp
+*.tmp
+
+# Operating System Artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Agent Framework Cache
+.agents/
+
+# Unrelated study files & separate tools
+budget_calculator/
+run_budget_app.*
+Machine_Learning_*
+generate_pdf.py
+generate_sem_pdf.py

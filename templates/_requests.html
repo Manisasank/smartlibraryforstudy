@@ -1,0 +1,52 @@
+<div class="table-shell">
+<div class="table-responsive">
+<table class="table align-middle">
+<thead>
+  <tr>
+    <th>Student</th>
+    <th>Book Requested</th>
+    <th>Request Date</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {% for r in rows %}
+  <tr>
+    <td>
+      <strong>{{ r.user_name }}</strong><br>
+      <small class="text-secondary">{{ r.email }}</small>
+    </td>
+    <td><strong>{{ r.title }}</strong></td>
+    <td>{{ r.request_date[:10] if r.request_date else '-' }}</td>
+    <td>
+      {% if r.status == 'pending' %}
+        <span class="badge bg-warning">Pending Review</span>
+      {% elif r.status == 'approved' %}
+        <span class="badge bg-success">Approved &amp; Issued</span>
+      {% elif r.status == 'rejected' %}
+        <span class="badge bg-danger">Rejected</span>
+      {% else %}
+        <span class="badge bg-secondary">{{ r.status }}</span>
+      {% endif %}
+    </td>
+    <td>
+      {% if r.status == 'pending' %}
+        <form method="post" class="d-flex gap-2">
+          <input type="hidden" name="_csrf" value="{{ csrf }}">
+          <input type="hidden" name="request_id" value="{{ r.id }}">
+          <button name="action" value="approve" class="btn btn-sm btn-success" type="submit">Approve</button>
+          <button name="action" value="reject" class="btn btn-sm btn-outline-danger" type="submit">Reject</button>
+        </form>
+      {% else %}
+        <small class="text-secondary">{{ r.remarks or 'Completed' }}</small>
+      {% endif %}
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="5" class="text-secondary text-center py-4">No book requests found.</td></tr>
+  {% endfor %}
+</tbody>
+</table>
+</div>
+</div>

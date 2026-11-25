@@ -1,0 +1,258 @@
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow-pill">
+      <span class="pulsing-gem"></span>
+      Academic • Modern • Intelligent
+    </div>
+    <h1 class="hero-title">
+      Complete Library Management.<br>
+      <span class="hero-gradient-text">Smarter Today.</span>
+    </h1>
+    <p class="hero-description">
+      Automated cataloging, real-time inventory tracking, and AI-powered research assistance for modern educational institutions.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-pill" href="{{ url_for('public.books') }}">
+        Access Library <span aria-hidden="true">→</span>
+      </a>
+      <a class="btn btn-glass btn-pill" href="#features">
+        Explore Features
+      </a>
+      <button class="btn btn-glass btn-pill spotlight-trigger-btn" type="button" onclick="window.openSpotlight && window.openSpotlight()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Quick Search <kbd style="margin-left:6px;font-size:10px;opacity:.7">⌘K</kbd>
+      </button>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-glass-frame">
+      <div class="hero-status-card glass liquid-glass">
+        <div class="status-header">
+          <span class="status-indicator-dot"></span>
+          <div>
+            <div class="status-card-title">Live Library Status</div>
+            <div class="status-card-sub text-success">● All Systems Operational</div>
+          </div>
+        </div>
+
+        <div class="status-stats-list">
+          <div class="status-stat-row">
+            <div class="stat-icon-wrap">📚</div>
+            <div class="stat-meta">
+              <span class="stat-name">Books in Collection</span>
+              <strong class="stat-number">{{ stats.copies_total or '12,480' }}</strong>
+            </div>
+          </div>
+
+          <div class="status-stat-row">
+            <div class="stat-icon-wrap">👥</div>
+            <div class="stat-meta">
+              <span class="stat-name">Active Members</span>
+              <strong class="stat-number">{{ stats.students or '1,256' }}</strong>
+            </div>
+          </div>
+
+          <div class="status-stat-row">
+            <div class="stat-icon-wrap">📖</div>
+            <div class="stat-meta">
+              <span class="stat-name">Books Issued Today</span>
+              <strong class="stat-number">{{ stats.today_issued or '86' }}</strong>
+            </div>
+          </div>
+
+          <div class="status-stat-row">
+            <div class="stat-icon-wrap">✨</div>
+            <div class="stat-meta">
+              <span class="stat-name">Available Now</span>
+              <strong class="stat-number text-cyan">{{ stats.available_copies or '11,320' }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 Feature Cards Grid -->
+<section id="features" class="feature-grid">
+  <article class="feature-card glass hover-float">
+    <div class="feature-icon-badge">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    </div>
+    <h3>Smart Catalog</h3>
+    <p>Advanced search and automated cataloging system across subjects and racks.</p>
+  </article>
+
+  <article class="feature-card glass hover-float">
+    <div class="feature-icon-badge">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="1.8"/><path d="M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.8"/></svg>
+    </div>
+    <h3>Inventory Tracking</h3>
+    <p>Real-time stock monitoring, availability statuses and circulation records.</p>
+  </article>
+
+  <article class="feature-card glass hover-float">
+    <div class="feature-icon-badge">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    </div>
+    <h3>Member Management</h3>
+    <p>Students, staff and admin portals with granular role-based access control.</p>
+  </article>
+
+  <article class="feature-card glass hover-float">
+    <div class="feature-icon-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10H12V2Z" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 12 2.5 7.5M12 12v10" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    </div>
+    <h3>AI Research Assistant</h3>
+    <p>Get instant answers, smart book recommendations and research help.</p>
+  </article>
+
+  <article class="feature-card glass hover-float">
+    <div class="feature-icon-badge">
+      <svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+    <h3>Analytics &amp; Reports</h3>
+    <p>Detailed insights, borrowing rates, overdue stats and usage audit logs.</p>
+  </article>
+</section>
+
+<!-- Modern Library Showcase Section -->
+<section class="showcase-section glass p-4 mb-5">
+  <div class="row align-items-center g-4">
+    <div class="col-md-7">
+      <div class="section-kicker">BUILT FOR EDUCATION</div>
+      <h2 style="font-size:32px;margin:8px 0 14px;line-height:1.2">
+        A Modern Library for a <span class="accent-cyan">Smarter Generation</span>
+      </h2>
+      <p style="font-size:15px;line-height:1.7;color:#b6cadb;margin-bottom:20px">
+        Smart Library combines modern glass technology with academic excellence, making knowledge more accessible, organized, and engaging for everyone.
+      </p>
+
+      <div class="showcase-checklist">
+        <div class="check-item"><span class="check-icon">✓</span> Easy book search, shelf locator and online reservations</div>
+        <div class="check-item"><span class="check-icon">✓</span> AI-powered study assistance with natural research discovery</div>
+        <div class="check-item"><span class="check-icon">✓</span> Digital borrowing pass with Apple Wallet-style membership</div>
+        <div class="check-item"><span class="check-icon">✓</span> Secure role-based access for students, librarians and admins</div>
+        <div class="check-item"><span class="check-icon">✓</span> Comprehensive usage analytics and accountable fine management</div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      {% if featured_book %}
+      <div class="featured-book-holo-card glass liquid-glass">
+        <div class="book-cover-3d">
+          <div class="book-spine"></div>
+          <div class="book-front-face">
+            <span class="holo-foil-tag">FEATURED READ</span>
+            <h4 class="book-cover-title">{{ featured_book.title }}</h4>
+            <p class="book-cover-author">{{ featured_book.author }}</p>
+            <div class="book-cover-footer">
+              <span>{{ featured_book.category_name }}</span>
+              <code>{{ featured_book.isbn }}</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="featured-meta mt-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <h3 style="margin:0;font-size:17px">{{ featured_book.title }}</h3>
+              <small class="muted">{{ featured_book.author }}</small>
+            </div>
+            <span class="badge bg-success">● Available</span>
+          </div>
+
+          <div class="d-flex gap-2 mt-3">
+            <a class="btn btn-primary btn-sm w-100" href="{{ url_for('public.book_details', id=featured_book.id) }}">View Details</a>
+            {% if user and user.role == 'student' %}
+              <a class="btn btn-glass btn-sm w-100" href="{{ url_for('student.request_book', id=featured_book.id) }}">Quick Borrow</a>
+            {% else %}
+              <button class="btn btn-glass btn-sm w-100 spotlight-trigger-btn" type="button" onclick="window.openSpotlight()">Explore</button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- Dual Interactive Workspaces: AI Research + Live Catalog -->
+<section class="home-grid">
+  <!-- AI Research Assistant -->
+  <div class="assistant-card glass liquid-glass">
+    <div class="assistant-head">
+      <div class="assistant-title">
+        <span class="ai-dot-pulse"></span>
+        <strong>AI Research Assistant</strong>
+      </div>
+      <button class="btn btn-glass btn-sm" id="newChatBtn" type="button" style="font-size:11px">New Chat</button>
+    </div>
+    <p class="muted" style="font-size:12px;margin:6px 0 14px">
+      Powered library intelligence. Inquire about book recommendations, subjects, or circulation rules.
+    </p>
+
+    <div class="chat-window">
+      <div class="chat-bubble user">Explain machine learning in simple terms.</div>
+      <div class="chat-bubble">
+        Machine learning is a branch of artificial intelligence that allows computers to learn patterns from data and make decisions or predictions without being explicitly programmed. In our catalog, explore <em>Clean Code</em> and <em>Introduction to Algorithms</em> for algorithmic fundamentals.
+      </div>
+    </div>
+
+    <!-- Suggested prompt chips -->
+    <div class="prompt-chips-wrap">
+      <button class="prompt-chip" type="button" data-prompt="Suggest books on AI and computer science">Suggest books on AI</button>
+      <button class="prompt-chip" type="button" data-prompt="What are the library borrowing rules and fine rates?">Borrowing rules</button>
+      <button class="prompt-chip" type="button" data-prompt="How many books are in the library collection?">Collection stats</button>
+      <button class="prompt-chip" type="button" data-prompt="Explain machine learning in simple terms">Explain ML</button>
+    </div>
+
+    <div class="chat-input-pill">
+      <input id="assistantInput" aria-label="Research question" placeholder="Type your question about books, research, or topics...">
+      <button id="assistantBtn" type="button" aria-label="Send query">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Live Catalog Preview with Category Chips -->
+  <div class="catalog-card glass liquid-glass">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h3 style="margin:0;font-size:17px">Book Catalog Preview</h3>
+      <a class="btn btn-glass btn-sm" href="{{ url_for('public.books') }}">View All →</a>
+    </div>
+    <p class="muted" style="font-size:12px;margin:0 0 12px">Search by title or click a subject tag to filter records instantly.</p>
+
+    <!-- Category filter chips -->
+    <div class="category-chips-bar mb-3">
+      <button class="cat-chip active" data-cat="all">All</button>
+      {% for c in cats %}
+        <button class="cat-chip" data-cat="{{ c.name }}">{{ c.name }}</button>
+      {% endfor %}
+    </div>
+
+    <div class="catalog-list" id="homeCatalogList">
+      {% for b in books %}
+      <a class="catalog-row glass-row" href="{{ url_for('public.book_details',id=b.id) }}" data-category="{{ b.category_name }}">
+        <div class="d-flex align-items-center gap-3">
+          <div class="mini-book-spine"></div>
+          <div>
+            <h4 style="margin:0 0 2px;font-size:14px">{{ b.title }}</h4>
+            <p class="muted" style="margin:0;font-size:11px">{{ b.author }} · <span class="text-cyan">{{ b.category_name }}</span></p>
+          </div>
+        </div>
+        <div class="text-end">
+          {% if b.copies_available > 0 %}
+            <span class="availability">{{ b.copies_available }} avail</span>
+          {% else %}
+            <span class="badge bg-danger" style="font-size:10px">Issued</span>
+          {% endif %}
+        </div>
+      </a>
+      {% else %}
+      <p class="text-secondary">No books currently registered in catalog.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>

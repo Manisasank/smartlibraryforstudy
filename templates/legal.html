@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="legal-card" role="main" aria-label="Legal & Governance Documentation">
+  <div class="section-kicker">Smart Library Governance &amp; Compliance</div>
+  <h1>{{ heading }}</h1>
+  <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 24px;">Last updated: 2026-11-01 • Version 2.2 • GDPR &amp; COPPA Compliant</p>
+
+  {% if kind == 'terms' %}
+  <h2>1. Acceptable Use &amp; Code of Conduct</h2>
+  <p>Use the Smart Library platform exclusively for legitimate academic and educational circulation activities. Unauthorized attempts to alter circulation records, bypass authentication, probe system endpoints, or inject malicious payloads are strictly prohibited and subject to institutional discipline.</p>
+
+  <h2>2. Account Credentials &amp; Role Integrity</h2>
+  <p>Accounts are assigned designated roles: Administrator, Staff, or Student. Users are legally responsible for safeguarding their login credentials and using only the capabilities authorized for their assigned role.</p>
+
+  <h2>3. Transparent Circulation &amp; Fee Policies</h2>
+  <p>All overdue fines, book replacement values, and loan durations are governed transparently by institutional academic regulations. There are <strong>zero hidden fees</strong>, zero surprise surcharges, and zero administrative markups.</p>
+
+  <h2>4. Limitation of Liability</h2>
+  <p>Smart Library provides digital catalog services on an "as-is" and "as-available" basis for academic support. Scheduled maintenance and system updates are communicated in advance.</p>
+
+  <h2>5. Entity &amp; Contact Details</h2>
+  <p>Operating Entity: <strong>Smart Library Academic Systems</strong><br/>
+  Lead Engineer: <strong>Y Mani Sasank Reddy</strong><br/>
+  Location: Hyderabad, India<br/>
+  Email: <a href="mailto:manisasankreddy@gmail.com">manisasankreddy@gmail.com</a></p>
+
+  {% elif kind == 'refund' %}
+  <h2>1. 100% Fee Transparency &amp; No Hidden Charges</h2>
+  <p>Smart Library does not charge any subscription, registration, or platform access fees. Access to the digital catalog, borrowing privileges, and circulation history is completely free to enrolled members.</p>
+
+  <h2>2. Overdue Fines &amp; Lost Book Fees</h2>
+  <p>All late return penalties or lost item charges are calculated strictly based on clear per-day institutional rates. Staff and students can view a complete breakdown of any outstanding balance directly on their <a href="{{ url_for('public.index') }}#fines">Fines Statement</a>.</p>
+
+  <h2>3. Refund &amp; Adjustment Eligibility</h2>
+  <p>• <strong>Returned Damaged/Lost Books:</strong> If an item marked lost is located and returned in good condition within 14 days, the replacement penalty is refunded or credited immediately.<br/>
+  • <strong>Administrative Erroneous Charges:</strong> Any discrepancy reported to library staff is audited and rectified within 48 hours.<br/>
+  • <strong>Deposit Returns:</strong> Institutional library caution deposits are refunded in full upon graduation or formal clearance.</p>
+
+  <h2>4. Refund Inquiries</h2>
+  <p>To request an audit or refund of an erroneous circulation charge, contact: <a href="mailto:manisasankreddy@gmail.com?subject=Library%20Fine%20Refund%20Request">manisasankreddy@gmail.com</a></p>
+
+  {% elif kind == 'cookies' %}
+  <h2>1. Essential Session Cookies Only</h2>
+  <p>Smart Library does <strong>NOT</strong> utilize third-party advertising cookies, cross-site trackers, or marketing pixels. We strictly employ essential first-party session cookies necessary for authenticated security.</p>
+
+  <h2>2. Cookie Inventory</h2>
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 16px 0;">
+    <thead>
+      <tr style="border-bottom: 2px solid #e2e8f0; text-align: left;">
+        <th style="padding: 8px;">Cookie Name</th>
+        <th style="padding: 8px;">Type</th>
+        <th style="padding: 8px;">Security Flags</th>
+        <th style="padding: 8px;">Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom: 1px solid #f1f5f9;">
+        <td style="padding: 8px; font-family: monospace;">session</td>
+        <td style="padding: 8px;">Essential</td>
+        <td style="padding: 8px;">HttpOnly, SameSite=Lax, Secure</td>
+        <td style="padding: 8px;">Maintains encrypted, authenticated user session state.</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px; font-family: monospace;">sl_cookie_consent</td>
+        <td style="padding: 8px;">Essential</td>
+        <td style="padding: 8px;">Local Storage</td>
+        <td style="padding: 8px;">Remembers user consent for cookie notice.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. Managing Cookie Preferences</h2>
+  <p>Because our session cookies are strictly essential for account security and role access, disabling them in your browser will prevent signing in to student or administrative accounts.</p>
+
+  {% elif kind == 'deletion' %}
+  <h2>1. Right to Erasure (GDPR Article 17)</h2>
+  <p>In compliance with the General Data Protection Regulation (GDPR Article 17) and global student privacy frameworks, you have the right to request deletion or anonymization of your personal data.</p>
+
+  <h2>2. Academic Record Retention Notice</h2>
+  <p>Active circulation loans, borrowed physical assets, and outstanding fee receipts must be settled or discharged before account deletion can be finalized in accordance with statutory academic accreditation standards.</p>
+
+  <h2>3. Submit Data Deletion Request</h2>
+  <form method="POST" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 16px 0;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px;">Registered Email Address:</label>
+      <input type="email" name="deletion_email" required placeholder="student@institution.edu" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;"/>
+    </div>
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px;">Reason for Erasure (Optional):</label>
+      <textarea name="deletion_reason" rows="3" placeholder="Graduation, transfer, or privacy request..." style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; resize: vertical;"></textarea>
+    </div>
+    <div style="margin-bottom: 16px;">
+      <label style="display: flex; gap: 8px; align-items: flex-start; font-size: 0.85rem; color: #475569;">
+        <input type="checkbox" required style="margin-top: 3px;"/>
+        <span>I confirm that all borrowed library materials have been returned and I request permanent erasure/anonymization of my account.</span>
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary" style="background: #dc2626; border-color: #dc2626; color: #fff;">
+      Submit Formal Erasure Request (GDPR Art. 17)
+    </button>
+  </form>
+
+  {% else %}
+  <!-- Privacy Policy -->
+  <h2>1. Data Minimization (GDPR Art. 5)</h2>
+  <p>Smart Library collects only data strictly necessary for legitimate library management: student/staff name, academic email, institutional role, book requests, active loans, and fine ledgers. We do not collect geolocation, tracking cookies, or biometric data.</p>
+
+  <h2>2. Use of Information</h2>
+  <p>Information is used solely to authenticate users, manage circulation, calculate overdue fees, provide audit receipts, and fulfill institutional governance requirements. <strong>We never sell, rent, or monetize your personal data.</strong></p>
+
+  <h2>3. Children &amp; Minor Privacy (COPPA &amp; GDPR Art. 8)</h2>
+  <p>Smart Library does not knowingly collect personal data from minors under 16 without authorized school or guardian enrollment consent. Library privileges for minors are administered through institutional education programs.</p>
+
+  <h2>4. Third-Party SDK &amp; Infrastructure Audit</h2>
+  <p>• <strong>Zero Ad Trackers:</strong> No third-party marketing, analytics, or behavioral tracking SDKs are deployed.<br/>
+  • <strong>Security Architecture:</strong> Passwords are cryptographically hashed using PBKDF2/SHA256, and sessions enforce CSRF tokens and HttpOnly flags.<br/>
+  • <strong>Local Asset Hosting:</strong> UI icons and stylesheets are served directly from institutional static storage.</p>
+
+  <h2>5. Email &amp; Notification Preferences (Unsubscribe)</h2>
+  <p>Automated circulation emails (e.g. overdue notices or hold ready notifications) are transactional and non-marketing. To manage receipt preferences or unsubscribe from non-critical email digests, contact <a href="mailto:manisasankreddy@gmail.com?subject=Unsubscribe%20Digests">manisasankreddy@gmail.com</a>.</p>
+
+  <h2>6. Data Deletion &amp; Contact</h2>
+  <p>To request permanent deletion of your profile and circulation records, visit our <a href="{{ url_for('public.deletion_request') }}">Data Deletion Request Portal</a> or contact Lead Controller <strong>Y Mani Sasank Reddy</strong> (<a href="mailto:manisasankreddy@gmail.com">manisasankreddy@gmail.com</a>).</p>
+  {% endif %}
+</div>
+{% endblock %}

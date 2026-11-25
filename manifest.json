@@ -1,0 +1,17 @@
+{
+  "name": "Smart Library — Student Academic Portal",
+  "short_name": "SmartLib",
+  "description": "Next-generation academic library catalog, virtual student ID, smart desk booking, and focus study desk.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0B0F19",
+  "theme_color": "#10B981",
+  "icons": [
+    {
+      "src": "static/images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

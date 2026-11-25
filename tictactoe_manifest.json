@@ -1,0 +1,17 @@
+{
+  "name": "TicTacToe Pro - Unbeatable AI & Local Multiplayer",
+  "short_name": "TicTacToe Pro",
+  "description": "Production-grade Tic Tac Toe game with Unbeatable Minimax AI, real-time analytics, and GDPR compliance.",
+  "start_url": "./tictactoe.html",
+  "display": "standalone",
+  "background_color": "#080C14",
+  "theme_color": "#00F0FF",
+  "icons": [
+    {
+      "src": "./static/tictactoe_favicon.svg",
+      "sizes": "64x64 128x128 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+<section class="dashboard-grid">
+{% for key,value in stats.items() %}
+<div class="stat-card">
+  <div class="section-kicker">{{ key|replace('_',' ') }}</div>
+  <h2>{% if key=='fines' %}₹{{ "%.2f"|format(value) }}{% else %}{{ value }}{% endif %}</h2>
+  <p>Current database record</p>
+</div>
+{% endfor %}
+</section>
+
+<div class="section-heading">
+  <div><div class="section-kicker">Operations</div><h2>Operational controls</h2><p>Select an operational action to manage the library.</p></div>
+</div>
+
+<div class="glass" style="display:flex;gap:12px;flex-wrap:wrap">
+{% if role=='admin' %}
+  <a class="btn btn-primary" href="{{ url_for('admin.books') }}">Manage Books</a>
+  <a class="btn btn-glass" href="{{ url_for('admin.add_book') }}">+ Add Book</a>
+  <a class="btn btn-primary" href="{{ url_for('admin.users') }}">Manage Users</a>
+  <a class="btn btn-glass" href="{{ url_for('admin.add_user') }}">+ Add User</a>
+  <a class="btn btn-primary" href="{{ url_for('admin.requests') }}">Book Requests</a>
+  <a class="btn btn-primary" href="{{ url_for('admin.issue_book') }}">Issue Book</a>
+  <a class="btn btn-glass" href="{{ url_for('admin.return_book') }}">Return Book</a>
+  <a class="btn btn-glass" href="{{ url_for('admin.issued_books') }}">Active Loans</a>
+  <a class="btn btn-glass" href="{{ url_for('admin.fines') }}">Fines Desk</a>
+  <a class="btn btn-glass" href="{{ url_for('admin.reports') }}">Reports</a>
+  <a class="btn btn-glass" href="{{ url_for('admin.settings') }}">Settings</a>
+{% elif role=='staff' %}
+  <a class="btn btn-primary" href="{{ url_for('staff.issue_book') }}">Issue Book</a>
+  <a class="btn btn-glass" href="{{ url_for('staff.return_book') }}">Return Book</a>
+  <a class="btn btn-primary" href="{{ url_for('staff.requests') }}">Review Requests</a>
+  <a class="btn btn-glass" href="{{ url_for('staff.fines') }}">Fines Desk</a>
+  <a class="btn btn-glass" href="{{ url_for('staff.issued_books') }}">Active Circulations</a>
+  <a class="btn btn-glass" href="{{ url_for('staff.student_history') }}">Student History</a>
+  <a class="btn btn-glass" href="{{ url_for('staff.reports') }}">Staff Reports</a>
+{% endif %}
+  <a class="btn btn-glass" href="{{ url_for('public.books') }}">Browse Catalog</a>
+</div>

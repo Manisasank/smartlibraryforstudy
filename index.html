@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Smart Library — Student Academic Ecosystem & Catalog</title>
+  
+  <meta name="description" content="Next-generation university smart library: instant textbook catalog with shelf location codes, virtual student ID card, smart desk reservations, and focus study desk.">
+  <meta name="theme-color" content="#10B981">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./static/images/favicon.svg">
+  
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main library content</a>
+
+  <!-- SITE HEADER / NAVBAR -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a href="javascript:void(0)" onclick="switchPage('catalog')" class="brand-wrapper" aria-label="Smart Library Home">
+        <div class="brand-logo-icon">📖</div>
+        <div>
+          <div class="brand-title">Smart <span>Library</span></div>
+          <div class="brand-subtitle">Knowledge Without Limits</div>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Tabs -->
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links">
+          <li>
+            <button class="nav-btn active" data-target="catalog" onclick="switchPage('catalog')">
+              <span>📚</span> Catalog Explorer
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="student" onclick="switchPage('student')">
+              <span>🪪</span> Student ID &amp; Loans
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="desks" onclick="switchPage('desks')">
+              <span>🪑</span> Smart Desk Booking
+            </button>
+          </li>
+          <li>
+            <button class="nav-btn" data-target="pomodoro" onclick="switchPage('pomodoro')">
+              <span>⏱️</span> Focus Desk
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <button class="nav-btn" onclick="toggle3DMode(true)" style="border: 1px solid var(--accent-cyan); color: var(--accent-cyan);" title="Explore 3D Virtual Campus">
+          <span>🌐</span> 3D Virtual Tour
+        </button>
+        <button class="nav-btn" onclick="openModal('modal-rules')" style="border: 1px solid var(--border-subtle);">
+          <span>📜</span> Library Rules
+        </button>
+        <button class="theme-toggle-btn" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark/Light Mode" title="Toggle theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APPLICATION CONTENT -->
+  <main id="main-content">
+    
+    <!-- HERO INTRO BANNER -->
+    <section class="hero-banner">
+      <div class="container hero-grid">
+        <div class="hero-content-col">
+          <div class="hero-pill">
+            <span class="hero-pill-pulse"></span>
+            <span>Academic • Modern • Intelligent</span>
+          </div>
+          <!-- Single H1 Semantic Tag -->
+          <h1 class="hero-title">
+            Complete Library Management.<br>
+            <span class="gradient-text">Smarter Today.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Automated cataloging, real-time inventory tracking, and AI-powered research assistance for modern educational institutions.
+          </p>
+
+          <div class="hero-cta-group">
+            <button class="btn-hero-primary" onclick="switchPage('catalog')">
+              Access Library →
+            </button>
+            <button class="btn-hero-secondary" onclick="document.getElementById('features-section').scrollIntoView({behavior:'smooth'})">
+              Explore Features
+            </button>
+          </div>
+
+          <!-- Quick Search Bar -->
+          <div class="search-bar-box">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              id="global-search-input" 
+              class="search-input" 
+              placeholder="Search books, authors, subjects..." 
+              oninput="handleSearch(this.value)"
+              aria-label="Search academic textbook catalog"
+            >
+            <span class="search-shortcut">Press /</span>
+          </div>
+
+          <!-- Feature Pills Row -->
+          <div class="hero-feature-pills">
+            <span class="feature-badge">⚡ Instant 1-Click Checkout</span>
+            <span class="feature-badge">📍 Shelf Coordinate Radar</span>
+            <span class="feature-badge">🪑 24 Live Focus Desks</span>
+            <span class="feature-badge">⏱️ Pomodoro Soundscape</span>
+          </div>
+        </div>
+
+        <!-- HERO RIGHT COLUMN: LIVE TELEMETRY & OPTIONAL 3D SPOTLIGHT -->
+        <div class="hero-visual-col">
+          <!-- Real-Time Campus Stats (Primary, Always Prominent) -->
+          <div class="hero-stats-card">
+            <div class="stats-header">
+              <div class="stats-title">
+                <span class="live-pulse-dot"></span> Live Library Status
+              </div>
+              <span class="live-badge">● All Systems Operational</span>
+            </div>
+            <div class="stats-vertical-list">
+              <div class="stat-row-item">
+                <div class="stat-icon-wrap">📚</div>
+                <div class="stat-info">
+                  <span class="stat-label">Books in Collection</span>
+                  <strong class="stat-number" id="stat-total-books">74</strong>
+                </div>
+              </div>
+              <div class="stat-row-item">
+                <div class="stat-icon-wrap">👥</div>
+                <div class="stat-info">
+                  <span class="stat-label">Active Members</span>
+                  <strong class="stat-number">1,256</strong>
+                </div>
+              </div>
+              <div class="stat-row-item">
+                <div class="stat-icon-wrap">📖</div>
+                <div class="stat-info">
+                  <span class="stat-label">Books Issued Today</span>
+                  <strong class="stat-number" id="stat-issued-today">86</strong>
+                </div>
+              </div>
+              <div class="stat-row-item">
+                <div class="stat-icon-wrap">📥</div>
+                <div class="stat-info">
+                  <span class="stat-label">Available Now</span>
+                  <strong class="stat-number" id="stat-available-books" style="color: var(--accent-emerald);">31</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Action Shortcuts -->
+            <div class="hero-quick-actions">
+              <button class="hero-action-pill" onclick="switchPage('student')">
+                <span>🪪</span> Student Pass
+              </button>
+              <button class="hero-action-pill" onclick="switchPage('desks')">
+                <span>🪑</span> Reserve Desk
+              </button>
+              <button class="hero-action-pill" onclick="switchPage('pomodoro')">
+                <span>⏱️</span> Focus Session
+              </button>
+              <button class="hero-action-pill highlight" onclick="toggleHero3DSpotlight()">
+                <span id="hero-spotlight-icon">🌐</span> <span id="hero-spotlight-text">3D Spotlight</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Optional 3D Featured Book Showcase (Collapsible / Non-Intrusive) -->
+          <div class="hero-3d-card" id="hero-3d-card" style="display: none; margin-top: 16px;">
+            <div class="hero-3d-top-bar">
+              <div class="hero-3d-badge">
+                <span class="hero-pill-pulse"></span>
+                <span>FEATURED 3D SPOTLIGHT</span>
+              </div>
+              <div class="hero-book-nav-group">
+                <button class="hero-nav-arrow" onclick="Library3D.prevHeroBook()" aria-label="Previous Book" title="Previous Book">❮</button>
+                <span id="hero-book-counter" class="hero-book-counter-tag">1 / 6</span>
+                <button class="hero-nav-arrow" onclick="Library3D.nextHeroBook()" aria-label="Next Book" title="Next Book">❯</button>
+                <button class="hero-nav-arrow" onclick="toggleHero3DSpotlight(false)" title="Hide 3D Spotlight" style="color: var(--accent-rose); margin-left: 6px;">✕</button>
+              </div>
+            </div>
+
+            <!-- 3D Canvas Mount Point -->
+            <div id="hero-3d-canvas-container" class="hero-3d-canvas-container" title="Drag with mouse or swipe to rotate in 3D"></div>
+
+            <div class="hero-3d-meta-panel">
+              <div class="hero-3d-shelf" id="hero-book-shelf">📍 FL-2 / AISLE-4 / RACK-A1</div>
+              <h3 class="hero-3d-title" id="hero-book-title">Deep Learning &amp; Neural Architectures</h3>
+              <p class="hero-3d-author" id="hero-book-author">By Ian Goodfellow, Yoshua Bengio, Aaron Courville</p>
+              
+              <div class="hero-3d-actions-row">
+                <button class="btn-hero-inspect" onclick="Library3D.inspectCurrentHeroBook()">
+                  <span>📖</span> Inspect in 3D
+                </button>
+                <button class="btn-hero-borrow" onclick="Library3D.borrowCurrentHeroBook()">
+                  <span>⚡</span> Instant Borrow
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         5 FEATURE CARDS ROW (MATCHES DESIGN REFERENCE BLUEPRINT)
+         ========================================== -->
+    <section class="container features-section" id="features-section" aria-label="Library Core Capabilities">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-box">📑</div>
+          <h4 class="feature-card-title">Smart Catalog</h4>
+          <p class="feature-card-desc">Advanced search and automated cataloging system.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-box">🔍</div>
+          <h4 class="feature-card-title">Inventory Tracking</h4>
+          <p class="feature-card-desc">Real-time stock monitoring and availability.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-box">👥</div>
+          <h4 class="feature-card-title">Member Management</h4>
+          <p class="feature-card-desc">Students, staff and admin portal with role-based access.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-box">🧠</div>
+          <h4 class="feature-card-title">AI Research Assistant</h4>
+          <p class="feature-card-desc">Get instant answers, book recommendations and research help.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-box">📊</div>
+          <h4 class="feature-card-title">Analytics &amp; Reports</h4>
+          <p class="feature-card-desc">Detailed insights and usage statistics.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW MODE SWITCHER & 3D VIRTUAL CAMPUS
+         ========================================== -->
+    <section class="container" aria-label="3D Virtual Library Campus">
+      <!-- Mode Toggle Switcher -->
+      <div class="view-mode-toggle-bar">
+        <button class="mode-toggle-btn active" id="btn-mode-2d" onclick="toggle3DMode(false)">
+          <span>📑</span> Fast 2D Catalog Grid (Default)
+        </button>
+        <button class="mode-toggle-btn" id="btn-mode-3d" onclick="toggle3DMode(true)">
+          <span>🌐</span> Explore 3D Virtual Campus
+        </button>
+      </div>
+
+      <!-- 3D Viewport Card (Hidden by default in Fast 2D Grid Mode) -->
+      <div class="webgl-wrapper" id="webgl-library-section" style="display: none;">
+        <div class="webgl-overlay-hud">
+          <div class="webgl-hud-left">
+            <div class="webgl-badge">
+              <span>🏛️ 3D INTERACTIVE COMMONS • 60 FPS</span>
+            </div>
+            <!-- Real-Time Performance Telemetry Badge -->
+            <div id="webgl-perf-badge" class="webgl-perf-badge" style="display: none;" title="Real-Time 3D Engine Telemetry (Shift+P)">
+              <span class="perf-metric"><span id="perf-fps">60</span> FPS</span>
+              <span class="perf-sep">•</span>
+              <span class="perf-metric"><span id="perf-drawcalls">18</span> Calls</span>
+              <span class="perf-sep">•</span>
+              <span class="perf-metric" id="perf-tier-badge">Ultra</span>
+            </div>
+            <!-- Lighting Mood Switcher -->
+            <div class="mood-selector-group" role="toolbar" aria-label="Lighting Mood">
+              <button class="mood-btn" data-mood="daylight" onclick="Library3D.setLightingMood('daylight')">☀️ Daylight</button>
+              <button class="mood-btn active" data-mood="midnight" onclick="Library3D.setLightingMood('midnight')">🌙 Midnight</button>
+              <button class="mood-btn" data-mood="golden" onclick="Library3D.setLightingMood('golden')">🌅 Sunset</button>
+            </div>
+          </div>
+
+          <!-- Cinematic Waypoint Selector -->
+          <div class="waypoint-btn-group" role="toolbar" aria-label="Camera Waypoints">
+            <button class="waypoint-pill active" data-waypoint="entrance" onclick="Library3D.flyToWaypoint('entrance')">🎥 Grand Entrance</button>
+            <button class="waypoint-pill" data-waypoint="stacks" onclick="Library3D.flyToWaypoint('stacks')">📚 AI Stacks</button>
+            <button class="waypoint-pill" data-waypoint="desks" onclick="Library3D.flyToWaypoint('desks')">🪑 Silent Focus Desks</button>
+            <button class="waypoint-pill" data-waypoint="window" onclick="Library3D.flyToWaypoint('window')">🪟 Window Terrace</button>
+            <button class="waypoint-pill" data-waypoint="circulation" onclick="Library3D.flyToWaypoint('circulation')">🏛️ Circulation Desk</button>
+          </div>
+
+          <!-- Viewport Zoom & Fullscreen Controls -->
+          <div class="viewport-controls-group">
+            <button class="viewport-ctrl-btn" onclick="Library3D.zoomCamera(-5)" title="Zoom In">➕</button>
+            <button class="viewport-ctrl-btn" onclick="Library3D.zoomCamera(5)" title="Zoom Out">➖</button>
+            <button class="viewport-ctrl-btn" onclick="Library3D.resetCampusCamera()" title="Reset Camera">🔄</button>
+            <button class="viewport-ctrl-btn" id="btn-toggle-perf" onclick="Library3D.togglePerfOverlay()" title="Toggle Real-Time 3D Performance Telemetry (Shift+P)">📊</button>
+            <button class="viewport-ctrl-btn" onclick="Library3D.toggleFullscreen()" title="Toggle Fullscreen">⛶</button>
+            <button class="viewport-ctrl-btn" onclick="toggle3DMode(false)" title="Close 3D View and Return to Fast Grid" style="background: rgba(255, 90, 95, 0.25); color: #FF5A5F; font-weight: bold; border-color: rgba(255, 90, 95, 0.4);">✕ Close 3D</button>
+          </div>
+        </div>
+
+        <!-- WebGL 3D Canvas Mount Point -->
+        <div id="webgl-canvas-container"></div>
+
+        <!-- Interactive 3D Instruction Hint -->
+        <div class="webgl-hint-bar">
+          <span>💡 Touch or click any book on the shelf to pull it out in 3D • Click any Study Desk to reserve • Drag to orbit camera</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Raycasting 3D Tooltip Hover Element -->
+    <div id="webgl-3d-tooltip" class="webgl-3d-tooltip"></div>
+
+    <!-- Interactive 3D Shelf Book Extraction Floating HUD -->
+    <div id="shelf-book-3d-hud" class="shelf-book-3d-hud" style="display: none;" role="dialog" aria-label="Selected Book Details">
+      <div class="shelf-hud-glass">
+        <div class="shelf-hud-header">
+          <span class="shelf-hud-badge" id="shelf-hud-badge">📍 FL-2 / AISLE-4 / RACK-A1</span>
+          <button class="shelf-hud-close-btn" onclick="Library3D.retractExtractedBook()" title="Return Book to Shelf" aria-label="Close">✕</button>
+        </div>
+        <div class="shelf-hud-category" id="shelf-hud-category">AI &amp; MACHINE LEARNING</div>
+        <h4 class="shelf-hud-title" id="shelf-hud-title">Deep Learning &amp; Neural Architectures</h4>
+        <p class="shelf-hud-author" id="shelf-hud-author">By Ian Goodfellow, Yoshua Bengio, Aaron Courville</p>
+        <div class="shelf-hud-status-row">
+          <div class="shelf-hud-availability" id="shelf-hud-availability">
+            <span class="status-dot">●</span> <span id="shelf-hud-stock-text">Available (3 copies)</span>
+          </div>
+          <div class="shelf-hud-isbn" id="shelf-hud-isbn">ISBN: 978-0262035613</div>
+        </div>
+        <div class="shelf-hud-actions">
+          <button class="btn-shelf-inspect" id="btn-shelf-inspect" onclick="Library3D.inspectExtractedBook()">
+            <span>📖</span> 3D Inspect
+          </button>
+          <button class="btn-shelf-borrow" id="btn-shelf-borrow" onclick="Library3D.borrowExtractedBook()">
+            <span>⚡</span> Borrow Book
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         VIEW 1: CATALOG EXPLORER
+         ========================================== -->
+    <section id="view-catalog" class="page-view active container" aria-label="Book Catalog">
+      <!-- Category Filter Pills -->
+      <div class="category-filter-bar" role="toolbar" aria-label="Subject Filter">
+        <button class="filter-pill active" onclick="setCategoryFilter('All', this)">All Disciplines</button>
+        <button class="filter-pill" onclick="setCategoryFilter('AI & ML', this)">🤖 AI &amp; Machine Learning</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Algorithms', this)">⚡ Data Structures &amp; Algorithms</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Systems', this)">🖥️ Computer Systems &amp; Cloud</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Mathematics', this)">📐 Mathematics &amp; Statistics</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Physics', this)">⚛️ Quantum &amp; Physics</button>
+        <button class="filter-pill" onclick="setCategoryFilter('Security', this)">🛡️ Cyber Security &amp; Cryptography</button>
+      </div>
+
+      <!-- Books Grid -->
+      <div id="catalog-grid" class="book-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 2: STUDENT ID & LOANS
+         ========================================== -->
+    <section id="view-student" class="page-view container" aria-label="Student Portal">
+      <div class="student-portal-layout">
+        <!-- Virtual Student ID Card -->
+        <div>
+          <div class="virtual-id-card">
+            <div class="id-card-header">
+              <div class="id-card-institute">UNIVERSITY SMART LIBRARY • MEMBER PASS</div>
+              <div class="id-card-hologram" title="Official Security Hologram"></div>
+            </div>
+
+            <div class="id-card-body">
+              <div class="id-avatar-frame">🎓</div>
+              <div class="id-details">
+                <h3 id="id-student-name">Y Mani Sasank Reddy</h3>
+                <p id="id-student-roll">Roll No: STU-2026-AI042</p>
+                <p id="id-student-dept">Dept: Computer Science &amp; AI</p>
+                <span class="id-badge-code">STATUS: ACTIVE SCHOLAR</span>
+              </div>
+            </div>
+
+            <div class="id-card-footer">
+              <div class="id-barcode">||| | |||| | ||| || |||</div>
+              <div class="id-qr-box" title="Digital Turnstile QR Code">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#0B0F19" stroke-width="2.5">
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                  <circle cx="17.5" cy="17.5" r="2.5"></circle>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 18px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px;">
+            <h4 style="font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 8px;">Institutional Quota Notice</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+              As per Academic Library Regulations §3.1, each enrolled student may hold up to <strong>3 concurrent book loans</strong> for a maximum period of <strong>14 calendar days</strong>. Overdue items incur ₹2.00/day.
+            </p>
+          </div>
+        </div>
+
+        <!-- Active Loans and Fines Table -->
+        <div class="loans-section">
+          <!-- Metrics Row -->
+          <div class="summary-cards-row">
+            <div class="metric-card">
+              <div class="label">Active Loans</div>
+              <div class="value emerald" id="metric-active-loans">2</div>
+            </div>
+            <div class="metric-card">
+              <div class="label">Quota Remaining</div>
+              <div class="value" id="metric-quota-left">1 / 3</div>
+            </div>
+            <div class="metric-card">
+              <div class="label">Total Fines</div>
+              <div class="value amber" id="metric-total-fine">₹8.00</div>
+            </div>
+          </div>
+
+          <!-- Active Borrowed Books List -->
+          <div class="loans-table-wrapper">
+            <div class="loans-table-header">
+              <h4>Currently Borrowed Academic Textbooks</h4>
+              <button class="nav-btn" onclick="switchPage('catalog')" style="font-size: 0.82rem; padding: 4px 12px;">
+                + Borrow Another Title
+              </button>
+            </div>
+            <ul id="student-loans-list" class="loans-list">
+              <!-- Rendered dynamically by app.js -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 3: SMART DESK BOOKING
+         ========================================== -->
+    <section id="view-desks" class="page-view container" aria-label="Desk Reservation">
+      <div class="desk-booking-layout">
+        <!-- Interactive Floor Plan Grid -->
+        <div class="floor-plan-card">
+          <div class="floor-plan-header">
+            <div>
+              <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 4px;">Library 2nd Floor Study Commons</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">Select an available desk to reserve your focused academic reading workspace.</p>
+            </div>
+            <div class="seat-legend">
+              <div class="legend-item"><span class="legend-dot available"></span> Available</div>
+              <div class="legend-item"><span class="legend-dot occupied"></span> Occupied</div>
+              <div class="legend-item"><span class="legend-dot my-seat"></span> Your Desk</div>
+            </div>
+          </div>
+
+          <!-- Desk Grid -->
+          <div id="seat-grid" class="seat-grid-container">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+        </div>
+
+        <!-- Desk Details Sidebar -->
+        <div class="desk-sidebar-card">
+          <h4>Your Reservation Pass</h4>
+          <div id="my-seat-status-box">
+            <!-- Dynamic reservation status -->
+          </div>
+
+          <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
+            <h5 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 10px;">Desk Amenities Included:</h5>
+            <ul style="list-style: none; font-size: 0.82rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
+              <li>🔌 Dedicated 65W USB-C &amp; AC Power Sockets</li>
+              <li>📶 High-Speed Campus WiFi 6 Access Point</li>
+              <li>💡 Dimmable Ergonomic Warm LED Reading Lamp</li>
+              <li>🤫 Acoustic Noise-Cancelling Privacy Baffles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         VIEW 4: POMODORO FOCUS DESK
+         ========================================== -->
+    <section id="view-pomodoro" class="page-view container" aria-label="Focus Study Desk">
+      <div class="pomodoro-desk-layout">
+        <!-- Timer Card -->
+        <div class="pomodoro-timer-card">
+          <div class="timer-mode-tag" id="timer-phase-tag">25 MIN FOCUS DEEP WORK</div>
+          <div class="timer-ring-wrapper">
+            <div class="timer-display" id="timer-time">25:00</div>
+          </div>
+
+          <div class="timer-controls">
+            <button class="btn-timer-primary" id="btn-timer-toggle" onclick="toggleTimer()">
+              Start Session
+            </button>
+            <button class="btn-timer-secondary" onclick="resetTimer()">
+              Reset
+            </button>
+          </div>
+
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            Pro-tip: Focus entirely on one research paper or textbook chapter. The procedural chime sounds automatically when the timer reaches zero.
+          </p>
+        </div>
+
+        <!-- Ambient Sound Synthesizer Card -->
+        <div class="ambient-synth-card">
+          <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; margin-bottom: 8px;">
+            Ambient Study Synthesizer
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 24px;">
+            Synthesize real-time acoustic backgrounds using the Web Audio API without downloading external audio streams.
+          </p>
+
+          <div class="sound-toggle-row">
+            <div class="sound-meta">
+              <h5>🌧️ Library Indoor Rain Sound</h5>
+              <p>Soft brown/pink noise procedural rain acoustic</p>
+            </div>
+            <label class="switch" aria-label="Toggle ambient rain sound">
+              <input type="checkbox" onchange="SoundFX.toggleAmbientRain(this.checked)">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="sound-toggle-row">
+            <div class="sound-meta">
+              <h5>🔔 Tibetan Singing Bowl Chime</h5>
+              <p>Harmonic chord chime on session completion</p>
+            </div>
+            <button class="btn-return-action" onclick="SoundFX.playBellChime()">Test Chime</button>
+          </div>
+
+          <div style="margin-top: 20px; padding: 16px; background: var(--bg-surface-elevated); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+            <div style="font-size: 0.78rem; font-weight: 700; color: var(--accent-emerald); margin-bottom: 4px;">ZERO EXTERNAL DEPENDENCIES</div>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">All sounds are procedurally generated mathematically inside your browser's audio DSP buffer.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  
+    <!-- ==========================================
+         SYSTEM ARCHITECTURE DIAGRAM (MATCHES DESIGN REFERENCE BLUEPRINT)
+         ========================================== -->
+    <section class="container system-arch-section" aria-label="System Architecture">
+      <div style="text-align: center; max-width: 650px; margin: 0 auto 20px;">
+        <span class="showcase-kicker">TECHNICAL BLUEPRINT</span>
+        <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">
+          Production-Ready System Architecture
+        </h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Robust, secure microservices powered by Python Flask, SQLite/PostgreSQL, WebGL Three.js, and client-side Web Audio DSP.
+        </p>
+      </div>
+
+      <div class="arch-nodes-grid">
+        <div class="arch-node-card">
+          <div class="arch-node-icon">💻</div>
+          <div class="arch-node-title">Frontend Core</div>
+          <div class="arch-node-desc">HTML5 Semantic DOM, CSS3 Variables, Three.js r128, Web Audio API</div>
+        </div>
+        <div class="arch-node-card">
+          <div class="arch-node-icon">⚡</div>
+          <div class="arch-node-title">Flask Application</div>
+          <div class="arch-node-desc">Python 3.12, CSRF protection, rate limiting, and RBAC authentication</div>
+        </div>
+        <div class="arch-node-card">
+          <div class="arch-node-icon">🗄️</div>
+          <div class="arch-node-title">Database &amp; Schema</div>
+          <div class="arch-node-desc">Relational catalog, student borrowing records, fine ledger, and seat inventory</div>
+        </div>
+        <div class="arch-node-card">
+          <div class="arch-node-icon">🤖</div>
+          <div class="arch-node-title">AI &amp; Microservices</div>
+          <div class="arch-node-desc">AI research assistant, 3D physics spring damping, and telemetry monitoring</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================
+       SITE FOOTER (MATCHES DESIGN REFERENCE BLUEPRINT)
+       ========================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-wrapper" style="margin-bottom: 14px;">
+            <div class="brand-logo-icon">📚</div>
+            <div>
+              <div class="brand-title">Smart <span>Library</span></div>
+              <div class="brand-subtitle">Knowledge Without Limits</div>
+            </div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; max-width: 320px;">
+            A modern library management platform empowering students, educators and researchers with intelligent tools and spatial 3D navigation.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h5>QUICK LINKS</h5>
+          <ul class="footer-links-list">
+            <li><a href="javascript:void(0)" onclick="switchPage('catalog')">Home &amp; Catalog</a></li>
+            <li><a href="#features-section">Core Features</a></li>
+            <li><a href="#showcase-section">Education Showcase</a></li>
+            <li><a href="#ai-assistant-section">AI Assistant</a></li>
+            <li><a href="javascript:void(0)" onclick="toggle3DMode(true)">3D Virtual Campus</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>LEGAL &amp; POLICY</h5>
+          <ul class="footer-links-list">
+            <li><a href="javascript:void(0)" onclick="openModal('modal-rules')">Library Regulations</a></li>
+            <li><a href="/terms">Terms &amp; Conditions</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/cookies">Cookie Policy</a></li>
+            <li><a href="/accessibility">Accessibility Standards</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>CONTACT &amp; HOURS</h5>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">
+            🏛️ Central Campus Library<br>
+            Mon – Fri: 08:00 – 22:00<br>
+            Sat – Sun: 09:00 – 18:00
+          </p>
+          <p style="font-size: 0.85rem; color: var(--accent-cyan);">
+            📧 circulation@university.edu
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2026 Smart Library. All rights reserved. Built with academic excellence.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="#" style="color: var(--text-muted); font-size: 0.8rem;">Security Status: 100% Operational</a>
+          <span style="color: var(--border-subtle);">|</span>
+          <a href="#" style="color: var(--text-muted); font-size: 0.8rem;">WCAG 2.1 AA Compliant</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ==========================================
+       MODALS: LIBRARY RULES & POLICIES
+       ========================================== -->
+  <div id="modal-rules" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-rules-title">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal('modal-rules')" aria-label="Close Rules Modal">✕</button>
+      <h3 id="modal-rules-title" style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; margin-bottom: 12px;">
+        🏛️ University Smart Library Regulations
+      </h3>
+      <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 16px;">
+        Official operational policies and borrowing standards approved by the Academic Senate.
+      </p>
+
+      <ul style="font-size: 0.85rem; color: var(--text-main); display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; padding-left: 20px;">
+        <li><strong>§3.1 Borrowing Quota:</strong> Maximum of <strong>3 books</strong> concurrently borrowed per registered student.</li>
+        <li><strong>§3.2 Loan Period:</strong> Standard duration of <strong>14 calendar days</strong> from the date of checkout.</li>
+        <li><strong>§3.3 Overdue Fines:</strong> Automatic penalty of <strong>₹2.00 per overdue day</strong> per book.</li>
+        <li><strong>§4.1 Online Reservation:</strong> Reserved books must be collected within <strong>48 hours</strong> from the physical circulation desk.</li>
+        <li><strong>§5.2 Noise Standards:</strong> Strict silence maintained in Zone S (Silent Focus Hall); collaborative discussions permitted only in Zone C (Tech Pods).</li>
+      </ul>
+
+      <button class="btn-timer-primary" style="width: 100%;" onclick="closeModal('modal-rules')">
+        I Understand &amp; Agree
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODALS: 3D HARDCOVER BOOK INSPECTOR
+       ========================================== -->
+  <div id="modal-3d-book" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-book-title">
+    <div class="modal-card modal-card-wide">
+      <button class="modal-close-btn" onclick="Library3D.closeBookInspector()" aria-label="Close 3D Book Inspector">✕</button>
+      
+      <div class="book-inspector-layout">
+        <!-- Left: 3D WebGL Book Viewport -->
+        <div class="book-inspector-viewport">
+          <div id="book-inspector-canvas-container" class="book-inspector-canvas"></div>
+          
+          <div class="inspector-controls-bar">
+            <button class="inspector-btn" id="btn-toggle-cover" onclick="Library3D.toggleBookCover()">
+              <span id="cover-btn-icon">📖</span> <span id="cover-btn-text">Open Cover</span>
+            </button>
+            <button class="inspector-btn" id="btn-prev-page" onclick="Library3D.prevPage()" title="Previous Academic Spread">
+              <span>❮</span> Prev Page
+            </button>
+            <span id="inspector-page-counter" class="inspector-page-pill" title="Current Academic Spread">Pages 1–2 of 6</span>
+            <button class="inspector-btn" id="btn-next-page" onclick="Library3D.nextPage()" title="Next Academic Spread">
+              Next Page <span>❯</span>
+            </button>
+            <button class="inspector-btn" onclick="Library3D.resetBookRotation()" title="Reset Camera View">
+              <span>🔄</span> Reset View
+            </button>
+          </div>
+          <div class="inspector-drag-hint">
+            <span>📖 Click right page or arrow to turn page • Drag to rotate 360° • Scroll/pinch to zoom</span>
+          </div>
+        </div>
+
+        <!-- Right: Book Metadata & Circulation Action -->
+        <div class="book-inspector-info">
+          <div>
+            <div class="inspector-category-badge" id="modal-book-category">AI &amp; Machine Learning</div>
+            <h2 id="modal-book-title" class="inspector-title">Deep Learning &amp; Neural Architectures</h2>
+            <div id="modal-book-author" class="inspector-author">By Ian Goodfellow, Yoshua Bengio, Aaron Courville</div>
+            
+            <div class="inspector-meta-grid">
+              <div class="inspector-meta-item">
+                <span class="meta-label">Shelf Locator</span>
+                <strong class="meta-value" id="modal-book-shelf">FL-2 / AISLE-4 / RACK-A1</strong>
+              </div>
+              <div class="inspector-meta-item">
+                <span class="meta-label">ISBN Code</span>
+                <strong class="meta-value" id="modal-book-isbn">978-0262035613</strong>
+              </div>
+              <div class="inspector-meta-item">
+                <span class="meta-label">Physical Copies</span>
+                <strong class="meta-value" id="modal-book-copies">3 / 5 Available</strong>
+              </div>
+              <div class="inspector-meta-item">
+                <span class="meta-label">Binding Format</span>
+                <strong class="meta-value">Hardcover • Gold Foil</strong>
+              </div>
+            </div>
+
+            <div class="inspector-desc-box">
+              <h4>Academic Synopsis</h4>
+              <p id="modal-book-desc">The definitive textbook on deep mathematical foundations of neural networks, backpropagation, and representation learning.</p>
+            </div>
+          </div>
+
+          <div class="inspector-actions-row">
+            <button id="modal-book-borrow-btn" class="btn-timer-primary" style="flex: 1;" onclick="Library3D.borrowCurrentInspectedBook()">
+              ⚡ Borrow This Title
+            </button>
+            <button class="btn-timer-secondary" onclick="Library3D.closeBookInspector()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Floating Capsule Dock -->
+  <nav class="mobile-capsule-dock" aria-label="Mobile Navigation">
+    <button class="nav-btn capsule-btn active" data-target="catalog" onclick="switchPage('catalog')" title="Catalog">
+      <span>📚</span>
+    </button>
+    <button class="nav-btn capsule-btn" data-target="student" onclick="switchPage('student')" title="Student ID">
+      <span>🪪</span>
+    </button>
+    <button class="nav-btn capsule-btn" data-target="desks" onclick="switchPage('desks')" title="Desks">
+      <span>🪑</span>
+    </button>
+    <button class="nav-btn capsule-btn" data-target="pomodoro" onclick="switchPage('pomodoro')" title="Pomodoro">
+      <span>⏱️</span>
+    </button>
+  </nav>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- 3D WEBGL GRAPHICS ENGINE (Three.js, OrbitControls & GLTFLoader) with 100% Offline Support -->
+  <script src="./static/vendor/three.min.js"></script>
+  <script>window.THREE || document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>')</script>
+  <script src="./static/vendor/OrbitControls.js"></script>
+  <script>window.THREE?.OrbitControls || document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\/script>')</script>
+  <script src="./static/vendor/GLTFLoader.js"></script>
+  <script>window.THREE?.GLTFLoader || document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"><\/script>')</script>
+
+  <!-- APPLICATION ENGINES -->
+  <script src="./app.js"></script>
+  <script src="./library_3d.js"></script>
+</body>
+</html>

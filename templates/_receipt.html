@@ -1,0 +1,96 @@
+<div class="receipt-shell">
+  <div class="receipt-card glass">
+    <div class="receipt-header">
+      <div class="d-flex align-items-center gap-3">
+        <span class="brand-mark" style="width:42px;height:42px;color:var(--cyan)">
+          <svg viewBox="0 0 48 48"><path d="M8 10h21a7 7 0 0 1 7 7v21H15a7 7 0 0 1-7-7V10Z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M36 17v21M14 16h14M14 23h14M14 30h10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        </span>
+        <div>
+          <h2 style="font-size:20px;margin:0">Smart Library</h2>
+          <small class="muted" style="letter-spacing:.12em;text-transform:uppercase;font-size:10px">OFFICIAL CIRCULATION PASS</small>
+        </div>
+      </div>
+      <div class="receipt-badge">
+        <span class="badge bg-success">Verified Issue</span>
+      </div>
+    </div>
+
+    <div class="receipt-divider"></div>
+
+    <div class="receipt-grid">
+      <div>
+        <span class="receipt-label">Issue Reference</span>
+        <div class="receipt-value"><code>{{ r.issue_code }}</code></div>
+      </div>
+      <div>
+        <span class="receipt-label">Circulation Status</span>
+        <div class="receipt-value"><strong style="color:var(--cyan)">{{ r.status|upper }}</strong></div>
+      </div>
+      <div>
+        <span class="receipt-label">Checkout Date</span>
+        <div class="receipt-value">{{ r.issue_date }}</div>
+      </div>
+      <div>
+        <span class="receipt-label">Return Due Date</span>
+        <div class="receipt-value" style="color:#ffb454;font-weight:700">{{ r.due_date }}</div>
+      </div>
+    </div>
+
+    <div class="receipt-divider"></div>
+
+    <div class="receipt-book-box">
+      <div class="d-flex justify-content-between align-items-start gap-3">
+        <div>
+          <span class="receipt-label">Catalog Item</span>
+          <h3 style="font-size:18px;margin:4px 0 2px">{{ r.title }}</h3>
+          <p class="muted" style="margin:0;font-size:13px">by {{ r.author }}</p>
+        </div>
+        <div class="text-end">
+          <span class="receipt-label">Shelf / Rack</span>
+          <div class="badge bg-primary" style="font-size:12px;margin-top:4px">{{ r.location_rack or 'CS-A1' }}</div>
+        </div>
+      </div>
+      <div class="mt-3 d-flex gap-4" style="font-size:12px">
+        <span><strong>ISBN:</strong> {{ r.isbn }}</span>
+      </div>
+    </div>
+
+    <div class="receipt-divider"></div>
+
+    <div class="receipt-grid">
+      <div>
+        <span class="receipt-label">Borrower Name</span>
+        <div class="receipt-value"><strong>{{ r.user_name }}</strong></div>
+      </div>
+      <div>
+        <span class="receipt-label">Student ID</span>
+        <div class="receipt-value"><code>{{ r.identifier or 'STU-RECORD' }}</code></div>
+      </div>
+      <div>
+        <span class="receipt-label">Department</span>
+        <div class="receipt-value">{{ r.department or 'General' }}</div>
+      </div>
+      <div>
+        <span class="receipt-label">Verification Stamp</span>
+        <div class="receipt-value" style="color:var(--emerald);font-size:11px">● Cryptographically Signed</div>
+      </div>
+    </div>
+
+    <div class="receipt-barcode">
+      <div class="barcode-lines">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="barcode-num">* {{ r.issue_code }} *</div>
+    </div>
+
+    <div class="receipt-actions no-print">
+      <button class="btn btn-primary" onclick="window.print()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+        Print Borrowing Pass
+      </button>
+      <a class="btn btn-glass" href="{{ url_for('student.my_books') }}">← Back to Borrowed Books</a>
+    </div>
+  </div>
+</div>

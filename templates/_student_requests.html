@@ -1,0 +1,38 @@
+<div class="table-shell">
+<div class="table-responsive">
+<table class="table align-middle">
+<thead>
+  <tr>
+    <th>Book Title</th>
+    <th>ISBN</th>
+    <th>Request Date</th>
+    <th>Status</th>
+    <th>Notes / Remarks</th>
+  </tr>
+</thead>
+<tbody>
+  {% for r in rows %}
+  <tr>
+    <td><strong>{{ r.title }}</strong></td>
+    <td><code>{{ r.isbn or '-' }}</code></td>
+    <td>{{ r.request_date[:10] if r.request_date else '-' }}</td>
+    <td>
+      {% if r.status == 'pending' %}
+        <span class="badge bg-warning">Pending Review</span>
+      {% elif r.status == 'approved' %}
+        <span class="badge bg-success">Approved</span>
+      {% elif r.status == 'rejected' %}
+        <span class="badge bg-danger">Rejected</span>
+      {% else %}
+        <span class="badge bg-secondary">{{ r.status }}</span>
+      {% endif %}
+    </td>
+    <td><small class="text-secondary">{{ r.remarks or '-' }}</small></td>
+  </tr>
+  {% else %}
+  <tr><td colspan="5" class="text-secondary text-center py-4">You have not submitted any book requests yet. <a href="{{ url_for('public.books') }}">Browse catalog to request books</a>.</td></tr>
+  {% endfor %}
+</tbody>
+</table>
+</div>
+</div>

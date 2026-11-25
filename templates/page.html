@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-title">
+  <div><h1>{{ heading }}</h1>{% if subtitle %}<p>{{ subtitle }}</p>{% endif %}</div>
+  {% if action_url %}<a class="btn btn-primary" href="{{ action_url }}">{{ action_text }}</a>{% endif %}
+</div>
+{% if body_html %}{{ body_html|safe }}{% endif %}
+{% if rows is defined %}
+<div class="table-shell">
+<div class="table-responsive"><table class="table align-middle">
+<thead><tr>{% for h in headers %}<th>{{ h }}</th>{% endfor %}</tr></thead>
+<tbody>{% for row in rows %}<tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>{% else %}<tr><td colspan="{{ headers|length }}">No records found.</td></tr>{% endfor %}</tbody>
+</table></div></div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,166 @@
+<!-- Member Identity Banner & 3D Digital Wallet Pass -->
+<div class="glass liquid-glass mb-4" style="border-radius:24px;padding:28px 32px">
+  <div class="row align-items-center g-4">
+    <div class="col-md-7">
+      <div class="eyebrow-pill" style="margin-bottom:12px">
+        <span class="pulsing-gem"></span>
+        Member Identity &bull; {{ u.role|upper }} ACCESS
+      </div>
+      <h2 style="font-size:28px;font-weight:800;margin:0 0 8px;color:#fff">{{ u.name }}</h2>
+      <p style="font-size:13px;color:#9cb2c6;margin:0 0 16px;line-height:1.6">
+        Verified institutional account with active library privileges. Use your digital pass for automated entry and checkout.
+      </p>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span class="badge {% if u.role=='admin' %}bg-info{% elif u.role=='staff' %}bg-primary{% else %}bg-success{% endif %}" style="font-size:12px;padding:6px 14px;border-radius:9999px">
+          Role: {{ u.role|capitalize }}
+        </span>
+        <span class="badge bg-secondary" style="font-size:12px;padding:6px 14px;border-radius:9999px">
+          ID: {{ u.identifier or ('MEMBER-' ~ u.id) }}
+        </span>
+        <span class="badge bg-primary" style="font-size:12px;padding:6px 14px;border-radius:9999px">
+          Dept: {{ u.department or 'Academic Member' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- 3D Apple Wallet Pass Preview -->
+    <div class="col-md-5">
+      <div class="wallet-card-wrapper" onclick="this.querySelector('.wallet-card-3d').classList.toggle('flipped')" title="Click to flip digital card" style="max-width:360px">
+        <div class="wallet-card-3d">
+          <!-- Card Front -->
+          <div class="card-face card-front" style="padding:18px 20px">
+            <div class="holo-sheen"></div>
+            <div class="card-brand-row">
+              <div class="card-inst-name" style="font-size:12px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z"/></svg>
+                Smart Library
+              </div>
+              <span class="card-pass-badge" style="font-size:9px">{{ u.role|upper }} PASS</span>
+            </div>
+
+            <div class="card-hardware-row" style="margin-top:2px">
+              <div class="card-emv-chip" style="width:32px;height:24px"></div>
+              <div class="card-nfc-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5.5 16.5A10 10 0 0 1 12 3a10 10 0 0 1 6.5 13.5M8.5 17.5A6 6 0 0 1 12 7a6 6 0 0 1 3.5 10.5M11 18.5a2 2 0 0 1 1-1.5 2 2 0 0 1 1 1.5"/></svg>
+              </div>
+            </div>
+
+            <div class="card-holder-row" style="margin-top:auto">
+              <div class="card-holder-name" style="font-size:15px">{{ u.name }}</div>
+              <div class="card-meta-details">
+                <div>
+                  <div style="font-size:8px;text-transform:uppercase;color:rgba(255,255,255,.6)">Identifier</div>
+                  <div class="card-id-code" style="font-size:12px">{{ u.identifier or ('ID-' ~ u.id) }}</div>
+                </div>
+                <div style="text-align:right">
+                  <div style="font-size:8px;text-transform:uppercase;color:rgba(255,255,255,.6)">Status</div>
+                  <strong style="color:#5eead4;font-size:11px">Active &bull; Verified</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Back -->
+          <div class="card-face card-back" style="padding:18px 20px">
+            <div class="card-magstripe" style="height:32px;margin:-4px -20px 10px -20px"></div>
+            <div class="card-signature-strip" style="height:24px;font-size:10px">
+              <span>{{ u.name }}</span>
+              <span>VERIFIED ACCESS</span>
+            </div>
+            <div class="card-back-terms" style="font-size:9px;line-height:1.4;margin-top:6px">
+              Official institutional pass. Retain this credentials pass for on-campus verification and library equipment checkout.
+            </div>
+            <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end">
+              <div style="font-family:monospace;font-size:10px;color:#cbd5e1;letter-spacing:.15em">
+                *{{ u.identifier or ('MEM' ~ u.id) }}*
+              </div>
+              <div style="font-size:8px;color:#94a3b8">EXP: 2028-12-31</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-flip-hint" style="font-size:10px;margin-top:8px">
+        Click to flip pass ↻
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <!-- Update Information Form -->
+  <div class="col-md-6">
+    <div class="panel-card glass liquid-glass h-100" style="border-radius:20px;padding:26px">
+      <div class="section-kicker">Member Profile</div>
+      <h3 style="margin:2px 0 16px;font-size:20px;font-weight:700">Account Details</h3>
+
+      <div class="glass p-3 mb-4" style="background:rgba(255,255,255,.02);border-radius:14px">
+        <div style="display:grid;grid-template-columns:110px 1fr;gap:10px;font-size:13px;line-height:1.8">
+          <span class="text-secondary">Email</span><span style="color:#edf6ff">{{ u.email }}</span>
+          <span class="text-secondary">Identifier</span><code>{{ u.identifier or 'Not assigned' }}</code>
+          <span class="text-secondary">Account Status</span><span class="text-success">&bull; Active &amp; Verified</span>
+        </div>
+      </div>
+
+      <form method="post">
+        <input type="hidden" name="_csrf" value="{{ csrf }}">
+        <input type="hidden" name="action" value="update_profile">
+
+        <div class="mb-3">
+          <label class="form-label" for="profile_name">Full Name</label>
+          <input id="profile_name" class="form-control" name="name" value="{{ u.name }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="profile_phone">Phone Number</label>
+          <input id="profile_phone" class="form-control" name="phone" value="{{ u.phone or '' }}" placeholder="Enter contact number">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="profile_department">Department / Faculty</label>
+          <input id="profile_department" class="form-control" name="department" value="{{ u.department or '' }}" placeholder="e.g. Computer Science">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="profile_address">Postal Address</label>
+          <textarea id="profile_address" class="form-control" name="address" rows="3" placeholder="Enter physical address">{{ u.address or '' }}</textarea>
+        </div>
+
+        <button class="btn btn-primary btn-pill" type="submit">Save Changes &rarr;</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Security & Password Form -->
+  <div class="col-md-6">
+    <div class="panel-card glass liquid-glass h-100" style="border-radius:20px;padding:26px">
+      <div class="section-kicker">Security Control</div>
+      <h3 style="margin:2px 0 6px;font-size:20px;font-weight:700">Authentication &amp; Password</h3>
+      <p style="font-size:13px;margin-bottom:20px;color:#93a8bc">
+        Ensure your account uses a secure password with letters, numbers, and symbols.
+      </p>
+
+      <form method="post">
+        <input type="hidden" name="_csrf" value="{{ csrf }}">
+        <input type="hidden" name="action" value="change_password">
+
+        <div class="mb-3">
+          <label class="form-label" for="current_password">Current Password</label>
+          <input id="current_password" class="form-control" type="password" name="current_password" required placeholder="Enter current password">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="new_password">New Password</label>
+          <input id="new_password" class="form-control" type="password" name="new_password" required placeholder="Enter new password (min 6 characters)">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="confirm_password">Confirm New Password</label>
+          <input id="confirm_password" class="form-control" type="password" name="confirm_password" required placeholder="Repeat new password">
+        </div>
+
+        <button class="btn btn-primary btn-pill" type="submit">Update Password &rarr;</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="table-shell">
+<div class="table-responsive">
+<table class="table align-middle">
+<thead>
+  <tr>
+    <th>Issue Code</th>
+    <th>Book Title</th>
+    {% if not student_view|default(false) %}
+      <th>Borrower</th>
+    {% else %}
+      <th>Author</th>
+    {% endif %}
+    <th>Issue Date</th>
+    <th>Due Date</th>
+    <th>Return Date</th>
+    <th>Status</th>
+  </tr>
+</thead>
+<tbody>
+  {% for r in rows %}
+  <tr>
+    <td><code>{{ r.issue_code or ('ISS-' ~ r.id) }}</code></td>
+    <td><strong>{{ r.title }}</strong></td>
+    {% if not student_view|default(false) %}
+      <td>
+        {{ r.user_name }}
+        {% if r.identifier %}<br><small class="text-secondary">{{ r.identifier }}</small>{% endif %}
+      </td>
+    {% else %}
+      <td>{{ r.author or '-' }}</td>
+    {% endif %}
+    <td>{{ r.issue_date }}</td>
+    <td>
+      <span {% if r.status == 'overdue' %}style="color:var(--danger);font-weight:700"{% endif %}>
+        {{ r.due_date }}
+      </span>
+    </td>
+    <td>{{ r.return_date or '-' }}</td>
+    <td>
+      {% if r.status == 'returned' %}
+        <span class="badge bg-secondary">Returned</span>
+      {% elif r.status == 'overdue' %}
+        <span class="badge bg-danger">Overdue</span>
+      {% elif r.status == 'issued' %}
+        <span class="badge bg-success">Active</span>
+      {% else %}
+        <span class="badge bg-primary">{{ r.status|capitalize }}</span>
+      {% endif %}
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="7" class="text-secondary text-center py-4">No circulation records found.</td></tr>
+  {% endfor %}
+</tbody>
+</table>
+</div>
+</div>

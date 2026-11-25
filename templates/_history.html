@@ -1,0 +1,26 @@
+<div class="table-shell">
+<div class="table-responsive">
+<table class="table align-middle">
+<thead>
+  <tr>
+    <th>Student Name</th>
+    <th>Student Identifier</th>
+    <th>Total Lifetime Borrowings</th>
+  </tr>
+</thead>
+<tbody>
+  {% for r in rows %}
+  <tr>
+    <td><strong>{{ r.name }}</strong></td>
+    <td><code>{{ r.identifier or '-' }}</code></td>
+    <td>
+      <span class="badge bg-primary" style="font-size:12px">{{ r.total_loans }} loans</span>
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="3" class="text-secondary text-center py-4">No student loan history recorded yet.</td></tr>
+  {% endfor %}
+</tbody>
+</table>
+</div>
+</div>

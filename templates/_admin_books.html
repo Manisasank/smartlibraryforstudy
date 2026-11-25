@@ -1,0 +1,49 @@
+<div class="table-shell">
+<div class="table-responsive">
+<table class="table align-middle">
+<thead>
+  <tr>
+    <th>Book &amp; Author</th>
+    <th>ISBN</th>
+    <th>Category</th>
+    <th>Rack</th>
+    <th>Inventory</th>
+    <th>Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {% for b in rows %}
+  <tr>
+    <td>
+      <strong>{{ b.title }}</strong><br>
+      <small class="text-secondary">{{ b.author }}</small>
+    </td>
+    <td><code>{{ b.isbn }}</code></td>
+    <td><span class="badge bg-primary">{{ b.category }}</span></td>
+    <td>{{ b.location_rack or '-' }}</td>
+    <td>
+      {% if b.copies_available > 0 %}
+        <span class="badge bg-success">{{ b.copies_available }} / {{ b.copies_total }}</span>
+      {% else %}
+        <span class="badge bg-danger">0 / {{ b.copies_total }} (Out)</span>
+      {% endif %}
+    </td>
+    <td>
+      <div class="d-flex gap-2">
+        <a class="btn btn-sm btn-glass" href="{{ url_for('admin.edit_book',book_id=b.id) }}">Edit</a>
+        <form method="post" style="display:inline" onsubmit="return confirm('Are you sure you want to delete this book?');">
+          <input type="hidden" name="_csrf" value="{{ csrf }}">
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="id" value="{{ b.id }}">
+          <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+        </form>
+      </div>
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="6" class="text-secondary text-center py-4">No books registered in the catalog.</td></tr>
+  {% endfor %}
+</tbody>
+</table>
+</div>
+</div>
